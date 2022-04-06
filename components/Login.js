@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,27 +10,44 @@ import {
   TouchableOpacity,
 } from "react-native";
 import HomeScreen from "./Home.js";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { withTheme } from "react-native-elements";
 import { auth } from "../firebase.js";
 
-const Stack = createNativeStackNavigator();
+
 
 export default function Login({ navigation }) {
   // Add login screen implementing Firebase auth
 
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if(user){
+        navigation.navigate("Home")
+      }
+    })
+
+    return unsubscribe
+  }, [])
 
   const handleSignUp = () => {
     auth
-      .createUserWithEmailAndPassword(userEmail, userPassword)
+      .createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log(user.userEmail);
+        console.log('Registered with: ', user.email);
       })
       .catch(error => alert(error.message));
+  };
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Logged in with: ', user.email);
+      })
+      .catch(error=> alert(error.message));
   };
 
   return (
@@ -38,20 +55,22 @@ export default function Login({ navigation }) {
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
-          value={userEmail}
-          onChangeText={text=> setUserEmail(text)}
+          value={email}
+          onChangeText={text=> setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
-          value={userPassword}
-          onChangeText={text=> setUserPassword(text)}
+          value={password}
+          onChangeText={text=> setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => {  }} style={styles.loginButton}>
+        <TouchableOpacity 
+          onPress={handleLogin} 
+          style={styles.loginButton}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
