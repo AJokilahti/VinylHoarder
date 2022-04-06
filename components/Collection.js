@@ -1,32 +1,30 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Wantlist from "./Wantlist.js";
-import Search from "./Search.js";
-import Collection from "./Collection.js";
-import { NavigationContainer } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/core";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { auth } from "../firebase.js";
 
-const Tab = createBottomTabNavigator();
-
-const Home = () => {
+const Collection = () => {
+  const navigation = useNavigation();
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((error) => alert(error.message));
+  };
   return (
-    <Tab.Navigator
-      style={styles.container}
-      screenOptions={{
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
-      }}
-    >
-      <Tab.Screen name="Wantlist" component={Wantlist} />
-      <Tab.Screen name="Collection" component={Collection} />
-      <Tab.Screen name="Search" component={Search} />
-    </Tab.Navigator>
+    <View style={styles.container}>
+      <Text>Email: {auth.currentUser?.email}</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignOut}>
+        <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-export default Home;
+export default Collection;
 
 const styles = StyleSheet.create({
   container: {

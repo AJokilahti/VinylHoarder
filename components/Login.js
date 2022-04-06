@@ -9,21 +9,24 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import HomeScreen from "./Home.js";
 import { auth } from "../firebase.js";
 
 
 
-export default function Login({ navigation }) {
+const Login = () => {
   // Add login screen implementing Firebase auth
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if(user){
-        navigation.navigate("Home")
+        navigation.replace("Home")
       }
     })
 
@@ -83,6 +86,8 @@ export default function Login({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
