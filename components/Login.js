@@ -13,8 +13,10 @@ export default function Login({navigation}){
     const [userPassword, setUserPassword] = useState('');
     
     return (
+
         <View>
         <TextInput label></TextInput>
+        
         <Button 
           title="Sign in"
           onPress={() => navigation.navigate('Home')}
