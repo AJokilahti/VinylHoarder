@@ -1,14 +1,28 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from'@react-navigation/native-stack';
+import React from "react";
+import { StyleSheet, Text, View } from 'react-native';
+import Wantlist from "./Wantlist.js"
+import Search from "./Search.js"
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-export default function Home({navigation}){
-    
+const Tab = createBottomTabNavigator();
 
-    return (
-        <View>
-            <Text>Home screen</Text>
-        </View>
-    )
+export default function Home({ navigation }) {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator style={styles.container}>
+        <Tab.Screen name="Wantlist" component={Wantlist}/>
+        <Tab.Screen name="Search" component={Search}/> 
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
