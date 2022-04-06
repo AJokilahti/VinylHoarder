@@ -13,6 +13,7 @@ import HomeScreen from "./Home.js";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { withTheme } from "react-native-elements";
+import { auth } from "../firebase.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,16 @@ export default function Login({ navigation }) {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(userEmail, userPassword)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log(user.userEmail);
+      })
+      .catch(error => alert(error.message));
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -44,7 +55,7 @@ export default function Login({ navigation }) {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {  }}
+          onPress={handleSignUp}
           style={[styles.registerButton, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
