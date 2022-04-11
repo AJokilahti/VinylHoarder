@@ -1,16 +1,8 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  Image,
-  StyleSheet,
-  KeyboardAvoidingView,
-  TouchableOpacity,
+  KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View
 } from "react-native";
-import { useNavigation } from "@react-navigation/core";
-import HomeScreen from "./Home.js";
 import { auth } from "../firebase.js";
 
 

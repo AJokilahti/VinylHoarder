@@ -1,7 +1,6 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../firebase.js";
 
 const Collection = () => {

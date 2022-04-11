@@ -1,12 +1,9 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Wantlist from "./Wantlist.js";
-import Search from "./Search.js";
-import Collection from "./Collection.js";
-import { NavigationContainer } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/core";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { auth } from "../firebase.js";
+import React from "react";
+import { StyleSheet } from "react-native";
+import Collection from "./Collection.js";
+import Search from "./Search.js";
+import Wantlist from "./Wantlist.js";
 
 const Tab = createBottomTabNavigator();
 
