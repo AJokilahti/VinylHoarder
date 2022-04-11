@@ -10,13 +10,13 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
+import { discogsApi as key } from "../utils/keys";
 
 export default function Wantlist({ navigation }) {
-  //
 
   const [vinyls, setVinyls] = useState([]);
   const [artist, setArtist] = useState("Nirvana");
-  const apiUrl = `https://api.discogs.com/database/search?type=master&artist=${artist}&format=vinyl&key=KEY&secret=SECRET`;
+  const apiUrl = `https://api.discogs.com/database/search?type=master&artist=${artist}&format=vinyl&${key}`;
 
   const getVinyls = () => {
     fetch(apiUrl)
@@ -29,7 +29,6 @@ export default function Wantlist({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text>WANTLIST</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -91,14 +90,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
   },
-  loginButton: {
+  button: {
     backgroundColor: "green",
     width: "100%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
-  button: {
+  blueButton: {
     backgroundColor: "blue",
     width: "100%",
     padding: 15,

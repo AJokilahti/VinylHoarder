@@ -12,6 +12,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyB44gLJ6NkSRuGEi9EgLlwrP3UGScXhRhI",
   authDomain: "fir-auth-2a472.firebaseapp.com",
   projectId: "fir-auth-2a472",
+  databaseURL: "https://fir-auth-2a472-default-rtdb.europe-west1.firebasedatabase.app",
   storageBucket: "fir-auth-2a472.appspot.com",
   messagingSenderId: "208482812301",
   appId: "1:208482812301:web:157b269c6958e6c9423dc4",
