@@ -14,18 +14,6 @@ import { discogsApi as key } from "../utils/keys";
 
 export default function Wantlist({ navigation }) {
 
-  const [vinyls, setVinyls] = useState([]);
-  const [artist, setArtist] = useState("Nirvana");
-  const apiUrl = `https://api.discogs.com/database/search?type=master&artist=${artist}&format=vinyl&${key}`;
-
-  const getVinyls = () => {
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => setVinyls(data.results))
-      .catch((error) => {
-        Alert.alert("Error", error);
-      });
-  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">

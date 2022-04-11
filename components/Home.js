@@ -15,8 +15,9 @@ const Home = () => {
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "gray",
       }}
+      initialRouteName="Collection"
     >
-      <Tab.Screen name="Wantlist" component={Wantlist} />
+      <Tab.Screen name="Wantlist" component={Wantlist}  />
       <Tab.Screen name="Collection" component={Collection} />
       <Tab.Screen name="Search" component={Search} />
     </Tab.Navigator>
