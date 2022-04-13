@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { auth } from "../firebase.js";
+import { auth, database } from "../firebase.js";
 
 const Collection = () => {
   const navigation = useNavigation();

@@ -10,13 +10,16 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
+import { ListItem } from "react-native-elements";
 import { discogsApi as key } from "../utils/keys";
+
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
   const [artist, setArtist] = useState("");
   const apiUrl = `https://api.discogs.com/database/search?type=master&artist=${artist}&format=vinyl&${key}`;
 
+  
   
   
   const getVinyls = () => {
@@ -46,6 +49,7 @@ export default function Search({ navigation }) {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View>
+            
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>
               {item.title}
             </Text>

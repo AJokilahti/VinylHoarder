@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { discogsApi as key } from "../utils/keys";
+import { auth, database } from "../firebase.js";
 
 export default function Wantlist({ navigation }) {
 
