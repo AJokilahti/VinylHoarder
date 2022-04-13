@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { discogsApi as key } from "../utils/keys";
+import { auth, database } from "../firebase.js";
 
 
 export default function Search({ navigation }) {
