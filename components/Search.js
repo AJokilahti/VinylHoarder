@@ -14,9 +14,10 @@ import { discogsApi as key } from "../utils/keys";
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
-  const [artist, setArtist] = useState("Nirvana");
+  const [artist, setArtist] = useState("");
   const apiUrl = `https://api.discogs.com/database/search?type=master&artist=${artist}&format=vinyl&${key}`;
 
+  
   
   const getVinyls = () => {
     fetch(apiUrl)
@@ -32,9 +33,8 @@ export default function Search({ navigation }) {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          value={artist}
           placeholder="Artist"
-          onChangeText={(text) => setArtist}
+          onChangeText={(text) => setArtist(text)}
         />
       </View>
       <View style={styles.buttonContainer}>
@@ -70,7 +70,6 @@ export default function Search({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
