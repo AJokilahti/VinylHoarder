@@ -17,6 +17,7 @@ import { auth, database } from "../firebase.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ContrastOutlined } from "@mui/icons-material";
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
@@ -32,17 +33,40 @@ export default function Search({ navigation }) {
       });
   };
 
-  const LeftActions = () => {
-    
-    return(
-      <TouchableOpacity style={styles.leftAction}>
-        <Text>HALOO</Text>
+  const addToWantList = () => {
+    console.log(`Added to WANTLIST ${item.title}`);
+  };
 
+  const addToCollection = () => {
+    console.log(`Added to COLLECTION ${item.title}`);
+    
+  };
+
+  const leftActions = () => {
+    /*const scale = dragX.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 1],
+      extrapolate: 'clamp'
+    })*/
+    return(
+      <TouchableOpacity style={styles.leftAction} onPress={addToWantList}>
+        <Text  ><Ionicons name='eye' size='40px' color='white' /></Text>
       </TouchableOpacity>
     )
   }
 
-
+  const rightActions = () => {
+    /*const scale = dragX.interpolate({
+      inputRange: [-100, 0],
+      outputRange: [1, 0],
+      extrapolate: 'clamp'
+    })*/
+    return(
+      <TouchableOpacity style={styles.rightAction} onPress={addToCollection}>
+        <Text  ><Ionicons name='disc' size='40px' color='white' /></Text>
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -70,7 +94,8 @@ export default function Search({ navigation }) {
         }}
         renderItem={({ item }) => (
           <GestureHandlerRootView>
-          <Swipeable renderLeftActions={LeftActions}
+          <Swipeable renderLeftActions={leftActions}
+          renderRightActions={rightActions}
           >
           <View style={styles.listItem}>
             <Text style={styles.listText}>{item.title}</Text>
@@ -167,6 +192,10 @@ const styles = StyleSheet.create({
   },
   leftAction: {
     backgroundColor: "#0782F9",
+    justifyContent: "center",
+  },
+  rightAction: {
+    backgroundColor: "green",
     justifyContent: "center",
   },
   slideButton: {

@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 
 import * as firebase from "firebase";
-import { getDatabase, push, ref, onValue } from'firebase/database';
 
 // TODO: Add SDKs for Firebase products that you want to use
 
