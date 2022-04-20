@@ -9,20 +9,20 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Animated
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { discogsApi as key } from "../utils/keys";
 import { auth, database } from "../firebase.js";
-
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
   const [artist, setArtist] = useState("");
   const apiUrl = `https://api.discogs.com/database/search?type=master&artist=${artist}&format=vinyl&${key}`;
 
-  
-  
-  
   const getVinyls = () => {
     fetch(apiUrl)
       .then((response) => response.json())
@@ -31,6 +31,18 @@ export default function Search({ navigation }) {
         Alert.alert("Error", error);
       });
   };
+
+  const LeftActions = () => {
+    
+    return(
+      <TouchableOpacity style={styles.leftAction}>
+        <Text>HALOO</Text>
+
+      </TouchableOpacity>
+    )
+  }
+
+
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -41,23 +53,31 @@ export default function Search({ navigation }) {
           onChangeText={(text) => setArtist(text)}
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View style={styles.searchButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={getVinyls}>
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
       <FlatList
+        style={styles.list}
         keyExtractor={(item, index) => index.toString()}
+        ItemSeparatorComponent={() => {
+          return (
+            <View
+              style={styles.separator}
+            />
+          ); 
+        }}
         renderItem={({ item }) => (
-          <View>
-            
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              {item.title}
-            </Text>
+          <GestureHandlerRootView>
+          <Swipeable renderLeftActions={LeftActions}
+          >
+          <View style={styles.listItem}>
+            <Text style={styles.listText}>{item.title}</Text>
             <Image
               style={{
-                width: 30,
-                height: 30,
+                width: 50,
+                height: 50,
                 resizeMode: "contain",
               }}
               source={{
@@ -65,6 +85,8 @@ export default function Search({ navigation }) {
               }}
             />
           </View>
+          </Swipeable>
+          </GestureHandlerRootView>
         )}
         data={vinyls}
       />
@@ -86,13 +108,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 10,
   },
-  buttonContainer: {
+  searchButtonContainer: {
     width: "60%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 10,
   },
   button: {
     backgroundColor: "green",
@@ -125,4 +147,40 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  list: {
+    marginTop: 10,
+    width: "100%",
+  },
+
+  listItem: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  listText: {
+    flex: 1,
+    fontSize: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  leftAction: {
+    backgroundColor: "#0782F9",
+    justifyContent: "center",
+  },
+  slideButton: {
+    backgroundColor: "green",
+    width: "40%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#CED0CE",
+    justifyContent:"center"
+  }
+
 });
