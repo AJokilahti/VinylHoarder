@@ -66,9 +66,8 @@ export default function Search({ navigation }) {
         style={styles.leftAction}
         onPress={() => addToWantList(item)}
       >
-        <Text>
+        
           <Ionicons name="eye" size="40px" color="white" />
-        </Text>
       </TouchableOpacity>
     );
   };
@@ -85,9 +84,8 @@ export default function Search({ navigation }) {
         style={styles.rightAction}
         onPress={() => addToCollection(item)}
       >
-        <Text>
+        
           <Ionicons name="disc" size="40px" color="white" />
-        </Text>
       </TouchableOpacity>
     );
   };
