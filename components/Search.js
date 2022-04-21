@@ -17,7 +17,6 @@ import { auth, database } from "../firebase.js";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { ContrastOutlined } from "@mui/icons-material";
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
@@ -33,36 +32,38 @@ export default function Search({ navigation }) {
       });
   };
 
-  const addToWantList = () => {
+  const addToWantList = (item) => {
     console.log(`Added to WANTLIST ${item.title}`);
   };
 
-  const addToCollection = () => {
+  const addToCollection = (item) => {
     console.log(`Added to COLLECTION ${item.title}`);
     
   };
 
-  const leftActions = () => {
+  const leftActions = (item) => {
     /*const scale = dragX.interpolate({
       inputRange: [0, 100],
       outputRange: [0, 1],
       extrapolate: 'clamp'
     })*/
+    console.log(item.title)
     return(
-      <TouchableOpacity style={styles.leftAction} onPress={addToWantList}>
+      <TouchableOpacity style={styles.leftAction} onPress={() => addToWantList(item)}>
         <Text  ><Ionicons name='eye' size='40px' color='white' /></Text>
       </TouchableOpacity>
     )
   }
 
-  const rightActions = () => {
+  const rightActions = (item) => {
     /*const scale = dragX.interpolate({
       inputRange: [-100, 0],
       outputRange: [1, 0],
       extrapolate: 'clamp'
     })*/
+    console.log(item.title)
     return(
-      <TouchableOpacity style={styles.rightAction} onPress={addToCollection}>
+      <TouchableOpacity style={styles.rightAction} onPress={() => addToCollection(item)}>
         <Text  ><Ionicons name='disc' size='40px' color='white' /></Text>
       </TouchableOpacity>
     )
@@ -94,8 +95,8 @@ export default function Search({ navigation }) {
         }}
         renderItem={({ item }) => (
           <GestureHandlerRootView>
-          <Swipeable renderLeftActions={leftActions}
-          renderRightActions={rightActions}
+          <Swipeable renderLeftActions={() => leftActions(item)}
+          renderRightActions={() => rightActions(item)}
           >
           <View style={styles.listItem}>
             <Text style={styles.listText}>{item.title}</Text>
