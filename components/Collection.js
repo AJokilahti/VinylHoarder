@@ -26,11 +26,7 @@ const Collection = () => {
 export default Collection;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  
   button: {
     backgroundColor: "red",
     width: "40%",
@@ -38,6 +34,34 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 40,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  input: {
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  searchButtonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  blueButton: {
+    backgroundColor: "blue",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -49,5 +73,50 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+  },
+
+  buttonOutlineText: {
+    color: "#0782F9",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  list: {
+    marginTop: 10,
+    width: "100%",
+  },
+
+  listItem: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  listText: {
+    flex: 1,
+    fontSize: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  leftAction: {
+    backgroundColor: "#0782F9",
+    justifyContent: "center",
+  },
+  rightAction: {
+    backgroundColor: "green",
+    justifyContent: "center",
+  },
+  slideButton: {
+    backgroundColor: "green",
+    width: "40%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#CED0CE",
+    justifyContent: "center",
   },
 });

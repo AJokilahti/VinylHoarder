@@ -9,11 +9,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated
+  Animated,
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { discogsApi as key } from "../utils/keys";
 import { auth, database } from "../firebase.js";
+import { getDatabase, push, ref, onValue } from "firebase/database";
+import "firebase/database";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -34,11 +36,22 @@ export default function Search({ navigation }) {
 
   const addToWantList = (item) => {
     console.log(`Added to WANTLIST ${item.title}`);
+
+    push(ref(database,'wantlist/'), {
+      'itemTitle': item.title,
+      'itemImg': item.thumb,
+      'user': auth.currentUser.uid,
+    });
   };
 
   const addToCollection = (item) => {
     console.log(`Added to COLLECTION ${item.title}`);
-    
+
+    push(ref(database,'collection/'), {
+      'itemTitle': item.title,
+      'itemImg': item.thumb,
+      'user': auth.currentUser.uid,
+    });
   };
 
   const leftActions = (item) => {
@@ -47,13 +60,18 @@ export default function Search({ navigation }) {
       outputRange: [0, 1],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title)
-    return(
-      <TouchableOpacity style={styles.leftAction} onPress={() => addToWantList(item)}>
-        <Text  ><Ionicons name='eye' size='40px' color='white' /></Text>
+    console.log(item.title);
+    return (
+      <TouchableOpacity
+        style={styles.leftAction}
+        onPress={() => addToWantList(item)}
+      >
+        <Text>
+          <Ionicons name="eye" size="40px" color="white" />
+        </Text>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   const rightActions = (item) => {
     /*const scale = dragX.interpolate({
@@ -61,13 +79,18 @@ export default function Search({ navigation }) {
       outputRange: [1, 0],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title)
-    return(
-      <TouchableOpacity style={styles.rightAction} onPress={() => addToCollection(item)}>
-        <Text  ><Ionicons name='disc' size='40px' color='white' /></Text>
+    console.log(item.title);
+    return (
+      <TouchableOpacity
+        style={styles.rightAction}
+        onPress={() => addToCollection(item)}
+      >
+        <Text>
+          <Ionicons name="disc" size="40px" color="white" />
+        </Text>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -87,31 +110,28 @@ export default function Search({ navigation }) {
         style={styles.list}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => {
-          return (
-            <View
-              style={styles.separator}
-            />
-          ); 
+          return <View style={styles.separator} />;
         }}
         renderItem={({ item }) => (
           <GestureHandlerRootView>
-          <Swipeable renderLeftActions={() => leftActions(item)}
-          renderRightActions={() => rightActions(item)}
-          >
-          <View style={styles.listItem}>
-            <Text style={styles.listText}>{item.title}</Text>
-            <Image
-              style={{
-                width: 50,
-                height: 50,
-                resizeMode: "contain",
-              }}
-              source={{
-                uri: `${item.thumb}`,
-              }}
-            />
-          </View>
-          </Swipeable>
+            <Swipeable
+              renderLeftActions={() => leftActions(item)}
+              renderRightActions={() => rightActions(item)}
+            >
+              <View style={styles.listItem}>
+                <Text style={styles.listText}>{item.title}</Text>
+                <Image
+                  style={{
+                    width: 50,
+                    height: 50,
+                    resizeMode: "contain",
+                  }}
+                  source={{
+                    uri: `${item.thumb}`,
+                  }}
+                />
+              </View>
+            </Swipeable>
           </GestureHandlerRootView>
         )}
         data={vinyls}
@@ -210,7 +230,6 @@ const styles = StyleSheet.create({
     height: 1,
     width: "100%",
     backgroundColor: "#CED0CE",
-    justifyContent:"center"
-  }
-
+    justifyContent: "center",
+  },
 });
