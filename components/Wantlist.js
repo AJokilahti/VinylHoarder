@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
+import "firebase/database";
+import { onValue, ref } from "firebase/database";
+import React, { useEffect, useState } from "react";
 import {
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
-  View,
-  FlatList,
-  Alert,
-  Image,
-  TextInput,
-  KeyboardAvoidingView,
   TouchableOpacity,
+  View,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { discogsApi as key } from "../utils/keys";
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../firebase.js";
-import { getDatabase, push, ref, onValue } from "firebase/database";
-import "firebase/database";
 import ItemSeparator from "./ItemSeparator";
 
 export default function Wantlist({ navigation }) {
-
   const [items, setItems] = useState([]);
   const [userData, setUserData] = useState([]);
 
@@ -44,7 +40,7 @@ export default function Wantlist({ navigation }) {
         style={styles.leftAction}
         onPress={() => addToWantList(item)}
       >
-          <Ionicons name="disc" size="40px" color="white" />
+        <Ionicons name="disc" size={40} color="white" />
       </TouchableOpacity>
     );
   };
@@ -61,56 +57,46 @@ export default function Wantlist({ navigation }) {
         style={styles.rightAction}
         onPress={() => console.log(`DELETE FROM WANTLIST`)} // addToCollection(item)
       >
-          <Ionicons name="trash" size="40px" color="white" />
+        <Ionicons name="trash" size={40} color="white" />
       </TouchableOpacity>
     );
   };
 
-  const ItemSep = () => {
-    return(
-      <View style={styles.separator} />
-    )
-  }
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      
+      <ItemSeparator />
       <FlatList
         style={styles.list}
         keyExtractor={(item, index) => index.toString()}
-        
         renderItem={({ item }) => {
           if (item.user === auth.currentUser.uid) {
-            return(
-          <GestureHandlerRootView>
-            <Swipeable
-              renderLeftActions={() => leftActions(item)}
-              renderRightActions={() => rightActions(item)}
-            >
-              <ItemSeparator/>
-              <View style={styles.listItem}>
-                <Text style={styles.listText}>{item.itemTitle}</Text>
-                <Image
-                  style={{
-                    width: 50,
-                    height: 50,
-                    resizeMode: "contain",
-                  }}
-                  source={{
-                    uri: `${item.itemImg}`,
-                  }}
-                />
-                
-              </View>
-              
-            </Swipeable>
-          </GestureHandlerRootView>
-          
-            )
-        }}}
+            return (
+              <GestureHandlerRootView>
+                <Swipeable
+                  renderLeftActions={() => leftActions(item)}
+                  renderRightActions={() => rightActions(item)}
+                >
+                  <View style={styles.listItem}>
+                    <Text style={styles.listText}>{item.itemTitle}</Text>
+                    <Image
+                      style={{
+                        width: 50,
+                        height: 50,
+                        resizeMode: "contain",
+                      }}
+                      source={{
+                        uri: `${item.itemImg}`,
+                      }}
+                    />
+                  </View>
+                  <ItemSeparator />
+                </Swipeable>
+              </GestureHandlerRootView>
+            );
+          }
+        }}
         data={items}
       />
-      
     </KeyboardAvoidingView>
   );
 }
@@ -169,8 +155,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   list: {
-    marginTop: 10,
     width: "100%",
+    backgroundColor: "white",
   },
 
   listItem: {

@@ -4,8 +4,7 @@ import { StyleSheet } from "react-native";
 import Collection from "./Collection.js";
 import Search from "./Search.js";
 import Wantlist from "./Wantlist.js";
-import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,31 +12,24 @@ const Home = () => {
   return (
     <Tab.Navigator
       style={styles.container}
-      screenOptions={({ route}) => ({
+      screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Wantlist') {
-            iconName = focused
-              ? 'eye'
-              : 'eye';
-          } else if (route.name === 'Collection') {
-            iconName = focused
-              ? 'disc'
-              : 'disc';
-
-          } else if (route.name === 'Search') {
-            iconName = focused
-              ? 'search'
-              : 'search';
+          if (route.name === "Wantlist") {
+            iconName = focused ? "eye" : "eye";
+          } else if (route.name === "Collection") {
+            iconName = focused ? "disc" : "disc";
+          } else if (route.name === "Search") {
+            iconName = focused ? "search" : "search";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
-      
-      initialRouteName: "Search"
-    })}
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "gray",
+
+        initialRouteName: "Search",
+      })}
     >
       <Tab.Screen name="Wantlist" component={Wantlist} />
       <Tab.Screen name="Search" component={Search} />

@@ -1,24 +1,23 @@
+import "firebase/database";
+import { push, ref } from "firebase/database";
 import React, { useState } from "react";
 import {
+  Alert,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
-  View,
-  FlatList,
-  Alert,
-  Image,
   TextInput,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
+  View,
 } from "react-native";
-import { ListItem } from "react-native-elements";
-import { discogsApi as key } from "../utils/keys";
-import { auth, database } from "../firebase.js";
-import { getDatabase, push, ref, onValue } from "firebase/database";
-import "firebase/database";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { auth, database } from "../firebase.js";
+import { discogsApi as key } from "../utils/keys";
+import ItemSeparator from "./ItemSeparator";
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
@@ -37,20 +36,20 @@ export default function Search({ navigation }) {
   const addToWantList = (item) => {
     console.log(`Added to WANTLIST ${item.title}`);
 
-    push(ref(database,'wantlist/'), {
-      'itemTitle': item.title,
-      'itemImg': item.thumb,
-      'user': auth.currentUser.uid,
+    push(ref(database, "wantlist/"), {
+      itemTitle: item.title,
+      itemImg: item.thumb,
+      user: auth.currentUser.uid,
     });
   };
 
   const addToCollection = (item) => {
     console.log(`Added to COLLECTION ${item.title}`);
 
-    push(ref(database,'collection/'), {
-      'itemTitle': item.title,
-      'itemImg': item.thumb,
-      'user': auth.currentUser.uid,
+    push(ref(database, "collection/"), {
+      itemTitle: item.title,
+      itemImg: item.thumb,
+      user: auth.currentUser.uid,
     });
   };
 
@@ -66,8 +65,7 @@ export default function Search({ navigation }) {
         style={styles.leftAction}
         onPress={() => addToWantList(item)}
       >
-        
-          <Ionicons name="eye" size="40px" color="white" />
+        <Ionicons name="eye" size={40} color="white" />
       </TouchableOpacity>
     );
   };
@@ -84,8 +82,7 @@ export default function Search({ navigation }) {
         style={styles.rightAction}
         onPress={() => addToCollection(item)}
       >
-        
-          <Ionicons name="disc" size="40px" color="white" />
+        <Ionicons name="disc" size={40} color="white" />
       </TouchableOpacity>
     );
   };
@@ -104,6 +101,7 @@ export default function Search({ navigation }) {
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
+      <ItemSeparator />
       <FlatList
         style={styles.list}
         keyExtractor={(item, index) => index.toString()}
@@ -159,6 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: "green",
@@ -192,8 +191,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   list: {
-    marginTop: 10,
     width: "100%",
+    backgroundColor: "white",
   },
 
   listItem: {

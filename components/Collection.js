@@ -1,23 +1,19 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useState, useEffect } from "react";
+import "firebase/database";
+import { onValue, ref } from "firebase/database";
+import React, { useEffect, useState } from "react";
 import {
+  FlatList,
+  Image,
   StyleSheet,
   Text,
-  View,
-  FlatList,
-  Alert,
-  Image,
-  TextInput,
-  KeyboardAvoidingView,
   TouchableOpacity,
+  View,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { discogsApi as key } from "../utils/keys";
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../firebase.js";
-import { getDatabase, push, ref, onValue } from "firebase/database";
-import "firebase/database";
 import ItemSeparator from "./ItemSeparator";
 
 const Collection = () => {
@@ -53,7 +49,7 @@ const Collection = () => {
         style={styles.leftAction}
         onPress={() => addToWantList(item)}
       >
-          <Ionicons name="disc" size="40px" color="white" />
+        <Ionicons name="disc" size={40} color="white" />
       </TouchableOpacity>
     );
   };
@@ -70,18 +66,19 @@ const Collection = () => {
         style={styles.rightAction}
         onPress={() => console.log(`DELETE FROM WANTLIST`)} // addToCollection(item)
       >
-          <Ionicons name="trash" size="40px" color="white" />
+        <Ionicons name="trash" size={40} color="white" />
       </TouchableOpacity>
     );
   };
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
+      <View style={styles.userInfo}>
         <Text>Email: {auth.currentUser?.email}</Text>
         <TouchableOpacity style={styles.button} onPress={handleSignOut}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
+      <ItemSeparator />
       <FlatList
         style={styles.list}
         keyExtractor={(item, index) => index.toString()}
@@ -93,7 +90,6 @@ const Collection = () => {
                   renderLeftActions={() => leftActions(item)}
                   renderRightActions={() => rightActions(item)}
                 >
-                  <ItemSeparator/>
                   <View style={styles.listItem}>
                     <Text style={styles.listText}>{item.itemTitle}</Text>
                     <Image
@@ -107,6 +103,7 @@ const Collection = () => {
                       }}
                     />
                   </View>
+                  <ItemSeparator />
                 </Swipeable>
               </GestureHandlerRootView>
             );
@@ -127,12 +124,18 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 10,
   },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  userInfo: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+    marginBottom: 10,
   },
   inputContainer: {
     width: "80%",
@@ -143,25 +146,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 10,
-  },
-  searchButtonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  blueButton: {
-    backgroundColor: "blue",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
   },
   buttonText: {
     color: "white",
@@ -175,8 +159,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   list: {
-    marginTop: 10,
     width: "100%",
+    backgroundColor: "white",
   },
 
   listItem: {
@@ -197,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rightAction: {
-    backgroundColor: "green",
+    backgroundColor: "red",
     justifyContent: "center",
   },
   slideButton: {
