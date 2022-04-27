@@ -36,7 +36,6 @@ export default function Wantlist({ navigation }) {
       outputRange: [0, 1],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title);
     return (
       <TouchableOpacity
         style={styles.leftAction}
@@ -57,7 +56,6 @@ export default function Wantlist({ navigation }) {
       outputRange: [1, 0],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title);
     return (
       <TouchableOpacity
         style={styles.rightAction}
@@ -83,7 +81,7 @@ export default function Wantlist({ navigation }) {
                   renderRightActions={() => rightActions(item)}
                 >
                   <View style={styles.listItem}>
-                    <Text style={styles.listText}>{item.itemTitle}</Text>
+                    <Text style={styles.listText}>{item.title}</Text>
                     <Image
                       style={{
                         width: 50,
@@ -91,7 +89,7 @@ export default function Wantlist({ navigation }) {
                         resizeMode: "contain",
                       }}
                       source={{
-                        uri: `${item.itemImg}`,
+                        uri: `${item.thumb}`,
                       }}
                     />
                   </View>
@@ -103,6 +101,7 @@ export default function Wantlist({ navigation }) {
         }}
         data={items}
       />
+      <ItemSeparator />
     </KeyboardAvoidingView>
   );
 }

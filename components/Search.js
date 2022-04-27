@@ -1,5 +1,4 @@
 import "firebase/database";
-import { push, ref } from "firebase/database";
 import React, { useState } from "react";
 import {
   Alert,
@@ -10,15 +9,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { auth, database } from "../firebase.js";
 import { discogsApi as key } from "../utils/keys";
 import ItemSeparator from "./ItemSeparator";
-import { addTo } from "./Service"
+import { addTo } from "./Service";
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
@@ -40,7 +38,6 @@ export default function Search({ navigation }) {
       outputRange: [0, 1],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title);
     return (
       <TouchableOpacity
         style={styles.leftAction}
@@ -57,7 +54,6 @@ export default function Search({ navigation }) {
       outputRange: [1, 0],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title);
     return (
       <TouchableOpacity
         style={styles.rightAction}
@@ -70,6 +66,7 @@ export default function Search({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <ItemSeparator />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -113,6 +110,7 @@ export default function Search({ navigation }) {
         )}
         data={vinyls}
       />
+      <ItemSeparator />
     </KeyboardAvoidingView>
   );
 }

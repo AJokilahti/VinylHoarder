@@ -8,14 +8,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../firebase.js";
 import ItemSeparator from "./ItemSeparator";
-import { deleteFrom, validateValues } from "./Service"
+import { deleteFrom, validateValues } from "./Service";
 
 const Collection = () => {
   const navigation = useNavigation();
@@ -33,7 +33,6 @@ const Collection = () => {
   useEffect(() => {
     const itemsRef = ref(database, "collection/");
     onValue(itemsRef, (snapshot) => {
-      console.log("Collection receive new value");
       
       setItems(validateValues(snapshot));
     });
@@ -45,7 +44,6 @@ const Collection = () => {
       outputRange: [1, 0],
       extrapolate: 'clamp'
     })*/
-    console.log(item.title);
     return (
       <TouchableOpacity
         style={styles.rightAction}
@@ -57,6 +55,7 @@ const Collection = () => {
   };
   return (
     <View style={styles.container}>
+      <ItemSeparator />
       <View style={styles.userInfo}>
         <Text>Email: {auth.currentUser?.email}</Text>
         <TouchableOpacity style={styles.button} onPress={handleSignOut}>
@@ -75,7 +74,7 @@ const Collection = () => {
                   renderRightActions={() => rightActions(item)}
                 >
                   <View style={styles.listItem}>
-                    <Text style={styles.listText}>{item.itemTitle}</Text>
+                    <Text style={styles.listText}>{item.title}</Text>
                     <Image
                       style={{
                         width: 50,
@@ -83,7 +82,7 @@ const Collection = () => {
                         resizeMode: "contain",
                       }}
                       source={{
-                        uri: `${item.itemImg}`,
+                        uri: `${item.thumb}`,
                       }}
                     />
                   </View>
@@ -95,6 +94,7 @@ const Collection = () => {
         }}
         data={items}
       />
+      <ItemSeparator />
     </View>
   );
 };

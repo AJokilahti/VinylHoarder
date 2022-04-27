@@ -1,13 +1,13 @@
+import { push, ref, remove } from "firebase/database";
 import { auth, database } from "../firebase.js";
-import { push, ref, remove, get } from "firebase/database";
 
 const addTo = (item, destination) => {
   
   if (!item) return false;
 
   const itemToPush = {
-    itemTitle: item.itemTitle,
-    itemImg: item.itemImg,
+    title: item.title,
+    thumb: item.thumb,
     user: auth.currentUser.uid,
   };
 
@@ -60,3 +60,4 @@ const validateValues = (snapshot) => {
 };
 
 export { addTo, deleteFrom, validateValues };
+
