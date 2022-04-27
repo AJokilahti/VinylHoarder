@@ -15,6 +15,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../firebase.js";
 import ItemSeparator from "./ItemSeparator";
+import { deleteFrom, validateValues } from "./Service"
 
 const Collection = () => {
   const navigation = useNavigation();
@@ -32,27 +33,11 @@ const Collection = () => {
   useEffect(() => {
     const itemsRef = ref(database, "collection/");
     onValue(itemsRef, (snapshot) => {
-      const data = snapshot.val();
-      setItems(Object.values(data));
+      console.log("Collection receive new value");
+      
+      setItems(validateValues(snapshot));
     });
   }, []);
-
-  const leftActions = (item) => {
-    /*const scale = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: 'clamp'
-    })*/
-    console.log(item.title);
-    return (
-      <TouchableOpacity
-        style={styles.leftAction}
-        onPress={() => addToWantList(item)}
-      >
-        <Ionicons name="disc" size={40} color="white" />
-      </TouchableOpacity>
-    );
-  };
 
   const rightActions = (item) => {
     /*const scale = dragX.interpolate({
@@ -64,7 +49,7 @@ const Collection = () => {
     return (
       <TouchableOpacity
         style={styles.rightAction}
-        onPress={() => console.log(`DELETE FROM WANTLIST`)} // addToCollection(item)
+        onPress={() => deleteFrom(item, "collection")} // addToCollection(item)
       >
         <Ionicons name="trash" size={40} color="white" />
       </TouchableOpacity>
@@ -87,7 +72,6 @@ const Collection = () => {
             return (
               <GestureHandlerRootView>
                 <Swipeable
-                  renderLeftActions={() => leftActions(item)}
                   renderRightActions={() => rightActions(item)}
                 >
                   <View style={styles.listItem}>

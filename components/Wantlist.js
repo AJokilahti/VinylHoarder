@@ -16,6 +16,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../firebase.js";
 import ItemSeparator from "./ItemSeparator";
 
+import { addTo, deleteFrom, validateValues } from "./Service"
+
 export default function Wantlist({ navigation }) {
   const [items, setItems] = useState([]);
   const [userData, setUserData] = useState([]);
@@ -23,8 +25,8 @@ export default function Wantlist({ navigation }) {
   useEffect(() => {
     const itemsRef = ref(database, "wantlist/");
     onValue(itemsRef, (snapshot) => {
-      const data = snapshot.val();
-      setItems(Object.values(data));
+      
+      setItems(validateValues(snapshot));
     });
   }, []);
 
@@ -38,7 +40,11 @@ export default function Wantlist({ navigation }) {
     return (
       <TouchableOpacity
         style={styles.leftAction}
-        onPress={() => addToWantList(item)}
+        onPress={() => {
+          if(addTo(item, "collection"))
+            deleteFrom(item, "wantlist")
+          
+        }}
       >
         <Ionicons name="disc" size={40} color="white" />
       </TouchableOpacity>
@@ -55,7 +61,7 @@ export default function Wantlist({ navigation }) {
     return (
       <TouchableOpacity
         style={styles.rightAction}
-        onPress={() => console.log(`DELETE FROM WANTLIST`)} // addToCollection(item)
+        onPress={() => deleteFrom(item, "wantlist")} // addToCollection(item)
       >
         <Ionicons name="trash" size={40} color="white" />
       </TouchableOpacity>

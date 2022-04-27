@@ -18,6 +18,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../firebase.js";
 import { discogsApi as key } from "../utils/keys";
 import ItemSeparator from "./ItemSeparator";
+import { addTo } from "./Service"
 
 export default function Search({ navigation }) {
   const [vinyls, setVinyls] = useState([]);
@@ -33,26 +34,6 @@ export default function Search({ navigation }) {
       });
   };
 
-  const addToWantList = (item) => {
-    console.log(`Added to WANTLIST ${item.title}`);
-
-    push(ref(database, "wantlist/"), {
-      itemTitle: item.title,
-      itemImg: item.thumb,
-      user: auth.currentUser.uid,
-    });
-  };
-
-  const addToCollection = (item) => {
-    console.log(`Added to COLLECTION ${item.title}`);
-
-    push(ref(database, "collection/"), {
-      itemTitle: item.title,
-      itemImg: item.thumb,
-      user: auth.currentUser.uid,
-    });
-  };
-
   const leftActions = (item) => {
     /*const scale = dragX.interpolate({
       inputRange: [0, 100],
@@ -63,7 +44,7 @@ export default function Search({ navigation }) {
     return (
       <TouchableOpacity
         style={styles.leftAction}
-        onPress={() => addToWantList(item)}
+        onPress={() => addTo(item, "wantlist")}
       >
         <Ionicons name="eye" size={40} color="white" />
       </TouchableOpacity>
@@ -80,7 +61,7 @@ export default function Search({ navigation }) {
     return (
       <TouchableOpacity
         style={styles.rightAction}
-        onPress={() => addToCollection(item)}
+        onPress={() => addTo(item, "collection")}
       >
         <Ionicons name="disc" size={40} color="white" />
       </TouchableOpacity>
