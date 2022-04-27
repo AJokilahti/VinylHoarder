@@ -8,24 +8,47 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
+const getColor = (name) => {
+  switch (name) {
+    case "Wantlist":
+      return "#0782F9";
+    case "Collection":
+      return "green";
+    case "Search":
+      return "orange";
+    default:
+      return "tomato";
+  }
+};
+
+const getIcon = (name, focused) => {
+  switch (name) {
+    case "Wantlist":
+      return focused ? "eye" : "eye";
+    case "Collection":
+      return focused ? "disc" : "disc";
+    case "Search":
+      return focused ? "search" : "search";
+    default:
+      return focused ? "QQ" : "QQ";
+  }
+};
+
 const Home = () => {
   return (
     <Tab.Navigator
       style={styles.container}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "Wantlist") {
-            iconName = focused ? "eye" : "eye";
-          } else if (route.name === "Collection") {
-            iconName = focused ? "disc" : "disc";
-          } else if (route.name === "Search") {
-            iconName = focused ? "search" : "search";
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <Ionicons
+              name={getIcon(route.name, focused)}
+              size={size}
+              color={getColor(route.name)}
+            />
+          );
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: getColor(route.name),
         tabBarInactiveTintColor: "gray",
 
         initialRouteName: "Search",
