@@ -24,6 +24,6 @@ npm install -g expo-cli
 Once you've created a personal key, add it to a config.json file to root.
 
 ```
-"discogsAPI" : "key={INSERT_KEY}secret={INSERT_SERCRET}"
+"discogsAPI" : "key={INSERT_KEY}&secret={INSERT_SERCRET}"
 ```
 
