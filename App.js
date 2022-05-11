@@ -1,39 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from'@react-navigation/native-stack';
-import HomeScreen from './components/Home.js';
-import LoginScreen from './components/Login.js';
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./components/Home.js";
+import LoginScreen from "./components/Login.js";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  
-
-
   return (
-    <NavigationContainer >
+    <RootSiblingParent>
+      <NavigationContainer>
         <Stack.Navigator style={styles.container}>
-          <Stack.Screen 
-          name="Login" 
-          component={LoginScreen}
-          options={{headerShown: false}}/>
-          <Stack.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{headerShown: false}}/>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
         <StatusBar style="auto" />
-    </NavigationContainer>
+      </NavigationContainer>
+    </RootSiblingParent>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
